@@ -1,0 +1,89 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #ffb695;
+  --color-primary-container: #f1650e;
+  --color-on-primary-container: #4c1a00;
+  --color-surface: #1d100b;
+  --color-surface-container: #2a1c16;
+  --color-on-surface: #f7ddd3;
+  --color-on-surface-variant: #e1bfb2;
+  --color-background: #0F0F0F;
+  --color-outline-variant: #594137;
+
+  --font-display: "Epilogue", sans-serif;
+  --font-body: "Be Vietnam Pro", sans-serif;
+  --font-label: "Space Grotesk", sans-serif;
+
+  --animate-glow: glow 10s ease-in-out infinite;
+  --animate-fade-in-up: fadeInUp 1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+
+  @keyframes glow {
+    0%, 100% {
+      transform: scale(1);
+      opacity: 0.1;
+    }
+    50% {
+      transform: scale(1.2);
+      opacity: 0.2;
+    }
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+/* Custom Base Styles */
+@layer base {
+  body {
+    @apply bg-background text-on-surface antialiased;
+    font-family: var(--font-body);
+  }
+
+  ::selection {
+    @apply bg-primary-container text-white;
+  }
+}
+
+/* Custom Utilities */
+@layer utilities {
+  .glass-panel {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  header.scrolled {
+    background: rgba(15, 15, 15, 0.8);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    height: 4.5rem;
+  }
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0F0F0F;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(241, 101, 14, 0.2);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(241, 101, 14, 0.4);
+}

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- SVG Tiny 1.2 PS Profile Placeholder -->
+<svg version="1.2" baseProfile="tiny-ps" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 400 400" xml:space="preserve">
+<title>The Monk Logo Placeholder</title>
+<rect x="0" y="0" fill="#0F0F0F" width="400" height="400"/>
+<circle fill="#f1650e" cx="200" cy="200" r="150"/>
+<text x="200" y="210" font-family="Arial" font-size="40" fill="#ffffff" text-anchor="middle">Replace with</text>
+<text x="200" y="250" font-family="Arial" font-size="40" fill="#ffffff" text-anchor="middle">Vector Logo</text>
+</svg>

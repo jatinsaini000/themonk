@@ -3,7 +3,7 @@ import './style.css'
 // Navbar Scroll Effect
 const navbar = document.getElementById('navbar');
 window.addEventListener('scroll', () => {
-  if (window.scrollY > 50) {
+  if (window.scrollY > 40) {
     navbar.classList.add('scrolled');
   } else {
     navbar.classList.remove('scrolled');
@@ -14,26 +14,42 @@ window.addEventListener('scroll', () => {
 const menuToggle = document.getElementById('menu-toggle');
 const navLinks = document.querySelector('nav');
 
-if (menuToggle) {
+if (menuToggle && navLinks) {
   menuToggle.addEventListener('click', () => {
-    navLinks.classList.toggle('hidden');
-    navLinks.classList.toggle('flex');
-    navLinks.classList.toggle('flex-col');
-    navLinks.classList.toggle('absolute');
-    navLinks.classList.toggle('top-20');
-    navLinks.classList.toggle('left-0');
-    navLinks.classList.toggle('w-full');
-    navLinks.classList.toggle('bg-background');
-    navLinks.classList.toggle('p-6');
-    navLinks.classList.toggle('border-b');
-    navLinks.classList.toggle('border-white/10');
+    const isHidden = navLinks.classList.contains('hidden');
+    if (isHidden) {
+      navLinks.classList.remove('hidden');
+      navLinks.classList.add('flex', 'flex-col', 'absolute', 'top-20', 'left-0', 'w-full', 'bg-[#0F0F0F]', 'p-6', 'border-b', 'border-white/10', 'gap-4', 'shadow-2xl');
+    } else {
+      navLinks.classList.add('hidden');
+      navLinks.classList.remove('flex', 'flex-col', 'absolute', 'top-20', 'left-0', 'w-full', 'bg-[#0F0F0F]', 'p-6', 'border-b', 'border-white/10', 'gap-4', 'shadow-2xl');
+    }
   });
 }
 
+// Package Selection Auto-Sync
+const packageSelectButtons = document.querySelectorAll('.package-select-btn');
+const packageDropdown = document.getElementById('package-select');
+
+packageSelectButtons.forEach(btn => {
+  btn.addEventListener('click', (e) => {
+    const selectedPkg = btn.getAttribute('data-select-package');
+    if (packageDropdown && selectedPkg) {
+      packageDropdown.value = selectedPkg;
+      
+      // Pulse animation on the dropdown to draw the user's attention
+      packageDropdown.classList.add('ring-2', 'ring-primary');
+      setTimeout(() => {
+        packageDropdown.classList.remove('ring-2', 'ring-primary');
+      }, 1500);
+    }
+  });
+});
+
 // Intersection Observer for Reveal Animations
 const observerOptions = {
-  threshold: 0.1,
-  rootMargin: '0px 0px -50px 0px'
+  threshold: 0.08,
+  rootMargin: '0px 0px -40px 0px'
 };
 
 const observer = new IntersectionObserver((entries) => {
@@ -52,31 +68,36 @@ document.querySelectorAll('section > div').forEach(el => {
 // Smooth Scroll for Nav Links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   anchor.addEventListener('click', function (e) {
-    e.preventDefault();
     const targetId = this.getAttribute('href');
-    if (targetId === '#') return;
-    
+    if (targetId === '#' || !targetId) return;
+
     const targetElement = document.querySelector(targetId);
     if (targetElement) {
+      e.preventDefault();
       targetElement.scrollIntoView({
         behavior: 'smooth'
       });
-      
+
       // Close mobile menu if open
-      if (!navLinks.classList.contains('hidden') && window.innerWidth < 768) {
-        menuToggle.click();
+      if (navLinks && !navLinks.classList.contains('hidden') && window.innerWidth < 1024) {
+        navLinks.classList.add('hidden');
+        navLinks.classList.remove('flex', 'flex-col', 'absolute', 'top-20', 'left-0', 'w-full', 'bg-[#0F0F0F]', 'p-6', 'border-b', 'border-white/10', 'gap-4', 'shadow-2xl');
       }
     }
   });
 });
 
-// Form Handling (Optional: Add success message)
-const contactForm = document.querySelector('form');
+// Form Submission State Handling
+const contactForm = document.getElementById('campaign-form');
 if (contactForm) {
   contactForm.addEventListener('submit', (e) => {
-    // Default Formspree behavior will take over, but we could add a loading state
-    const submitBtn = contactForm.querySelector('button');
-    submitBtn.innerHTML = 'Sending...';
-    submitBtn.disabled = true;
+    const submitBtn = contactForm.querySelector('button[type="submit"]');
+    if (submitBtn) {
+      submitBtn.innerHTML = `
+        <span class="inline-block animate-spin mr-2">⟳</span>
+        <span>Transmitting Request...</span>
+      `;
+      submitBtn.classList.add('opacity-80', 'cursor-not-allowed');
+    }
   });
 }
